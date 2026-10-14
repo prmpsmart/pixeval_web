@@ -2,7 +2,7 @@
 
 **One line:** double-click pixeval → the Python engine starts a local web server → the UI opens in the user's browser. Python stays the product; the UI becomes a web front end.
 
-This is the architecture that the preview in this repository is built for (`https://prmpsmart.github.io/pixeval_web/`). Option 04 is the same architecture with a native window instead of a browser tab.
+This is the architecture that the interactive preview of the new interface is built for (<https://prmpsmart.github.io/pixeval_web/>). Option 04 is the same architecture with a native window instead of a browser tab.
 
 ## How it works
 
@@ -22,7 +22,7 @@ This is the architecture that the preview in this repository is built for (`http
 
 - **Best UI/UX ecosystem available** for the same effort: components, charts, tables, accessibility, i18n, animation, dark mode, responsive layouts, Figma-to-CSS handoff, hot reload, browser dev-tools.
 - **No Qt, no Chromium bundled.** The user's browser is the renderer: the UI layer is about 9 MB (FastAPI/Uvicorn/Starlette/Pydantic ≈ 8.9 MB, the front end 0.34 MB), smaller than the Qt binaries it replaces (≈ 55–90 MB).
-- **Reuses the Python engine and FastAPI**, already present in the repo.
+- **Reuses the Python engine and FastAPI**, already present in the code base.
 - **Designs and prototypes are directly reusable** (the React preview already contains every screen and dialog).
 - **Testable:** `pytest` on the API, Playwright on the UI; CI is straightforward.
 - **Opens future doors without extra spend:** the same API can later serve a LAN/server install or remote scoring stations.
@@ -53,7 +53,7 @@ This is the architecture that the preview in this repository is built for (`http
 
 ## When to choose it
 
-- Fastest route to a modern UI with minimal install weight, and the team accepts a "runs in the browser" product.
+- Fastest route to a modern UI with minimal install weight, and a product that "runs in the browser" is acceptable.
 - You want the door open to LAN/remote/multi-user later.
 
 ## Effort and risks

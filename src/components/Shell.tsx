@@ -77,7 +77,7 @@ const CRUMBS: Record<string, string[]> = {
   '/participants': ['Library', 'Participants'], '/exams': ['Examination', 'Exams'], '/add-exam': ['Examination', 'Add exam'],
   '/sheets': ['Examination', 'Sheets management'], '/corrections': ['Examination', 'Corrections'], '/assign': ['Examination', 'Assign identities'],
   '/grades': ['Examination', 'Grades'], '/reserve': ['Examination', 'Reserve questions'], '/history': ['Examination', 'History'],
-  '/close': ['Examination', 'Close exams'], '/utilities': ['System', 'Utilities'], '/errors': ['Examination', 'Grades', 'Errors'],
+  '/close': ['Examination', 'Close exams'], '/utilities': ['System', 'Utilities'], '/errors': ['Examination', 'Grades', 'Errors'], '/research': ['System', 'Research'],
 }
 
 export function Shell() {

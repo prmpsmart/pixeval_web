@@ -22,7 +22,13 @@ All data is sample data, stored in the browser (`localStorage`); there is no bac
       store/useApp.ts         the single store: data, UI state, every create/edit/delete action, persistence
       data/                   types.ts (domain model), seed.ts (sample data)
       lib/                    domain.ts (grading, difficulty), hooks.ts, nav.ts, iconPaths.ts
-      styles/                 app.css (design tokens + components), pages.css (login)
+      styles/                 app.css (design tokens + components, Markdown styles), pages.css (login)
+      research/               the research documents (Markdown), shown in the app under Research
+      pages/Research.tsx      renders them; lib/research.ts loads them at build time
+
+## Research
+
+The Markdown files in `src/research/` are bundled and rendered in the app (sidebar → **Research**). Add a document by dropping a `.md` file there and linking it from `src/research/README.md`; links between documents (`other-file.md`) work inside the app.
 
 ## Adding a screen
 

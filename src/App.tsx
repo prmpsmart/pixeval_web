@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Shell } from './components/Shell'
 import { DialogHost } from './components/DialogHost'
@@ -18,6 +19,9 @@ import { Reserve } from './pages/Reserve'
 import { History } from './pages/History'
 import { CloseExams } from './pages/CloseExams'
 import { Utilities } from './pages/Utilities'
+
+/** The Research pages (Markdown renderer + documents) load only when opened, so the main bundle stays small. */
+const Research = lazy(() => import('./pages/Research').then((m) => ({ default: m.Research })))
 
 export default function App() {
   return (
@@ -41,6 +45,8 @@ export default function App() {
           <Route path="/history" element={<History />} />
           <Route path="/close" element={<CloseExams />} />
           <Route path="/utilities" element={<Utilities />} />
+          <Route path="/research" element={<Suspense fallback={null}><Research /></Suspense>} />
+          <Route path="/research/:doc" element={<Suspense fallback={null}><Research /></Suspense>} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Route>
         <Route path="/" element={<Navigate to="/login" replace />} />

@@ -1,10 +1,10 @@
-# 09 · Comparison, scoring and roadmap
+# 05 · Comparison, scoring and roadmap
 
 ## Constraint note
 
 - **The main focus is the end user, not the developer.** The primary score measures what the people who use piXeval every day experience: how the product looks and feels, how effective it is, and how it installs, starts and behaves on their computers. Developer convenience is scored separately and weighs less.
 - **Windows only:** piXeval is delivered as a Windows installer. Other operating systems are not considered; "consistency" means consistency across users' Windows PCs.
-- **WebView2 is available on all client machines** (confirmed by the author), so it is treated as present and not as a prerequisite or a risk.
+- **WebView2 is available on all client machines** (an assumption of this study), so it is treated as present and not as a prerequisite or a risk.
 - Team size, skills and language familiarity are **not constraints**; options are judged on technical merit.
 - There is **no incremental migration**: the new UI replaces the old one in one major release.
 - **Scores:** **Score A** = end-user experience (primary, weight 80%). **Score B** = ease of implementing it with the Python runtime (secondary, weight 20%). Other weightings are shown so the effect of the choice is visible.

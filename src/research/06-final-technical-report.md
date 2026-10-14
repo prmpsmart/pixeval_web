@@ -3,7 +3,7 @@
 **Subject:** piXeval 7.6.2 (OMR examination management system)
 **Prepared by:** Miracle Apata, BEng
 **Status:** draft for review — supporting notes are in this folder
-**Companion artefact:** interactive prototype, <https://prmpsmart.github.io/pixeval_web/> (source in this repository)
+**Companion artefact:** interactive prototype, <https://prmpsmart.github.io/pixeval_web/>
 
 ---
 
@@ -30,7 +30,7 @@ Users interact with the product through a Widgets-based interface styled with Qt
 3. Introduce **no new recurring cost** (licences, hosting, subscriptions).
 4. Preserve the installed-application experience on **Windows** (the only target platform): launch, work offline, access local files and scanner output.
 5. Migrate **once**: the new interface replaces the old one in a single major release pushed to all users. There is no incremental or side-by-side migration, so release reliability and feature parity matter more.
-6. Team size, skills and language familiarity are **not** treated as constraints (development is managed by the author, with AI assistance). Options are judged on technical merit; a new language is not counted as a cost in itself, whereas extra runtimes, build pipelines and process boundaries are.
+6. Team size, skills and language familiarity are **not** treated as constraints. Options are judged on technical merit; a new language is not counted as a cost in itself, whereas extra runtimes, build pipelines and process boundaries are.
 
 ### 1.4 Scope
 
@@ -40,7 +40,7 @@ Only the presentation layer and its integration with the engine are considered. 
 
 ## 2. Analysis of the current system
 
-Measured from the repository (details in `00-baseline-current-stack.md`):
+Measured from the repository (details in [00-baseline-current-stack.md](00-baseline-current-stack.md)):
 
 | Layer                                                 |    Files |          Lines | Qt dependency |
 | ----------------------------------------------------- | -------: | -------------: | ------------- |
@@ -98,7 +98,7 @@ Each option is scored 1–5 per criterion from documentation, published guides a
 
 ## 4. Candidate solutions
 
-Full write-ups with pros, cons and comparisons are in files `01`, `02`, `03`, `04`; the scoring is in `05`.
+Full write-ups with pros, cons and comparisons are in [01](01-pyside6-widgets-modernised.md), [02](02-qt-webengine-hybrid.md), [03](03-local-web-app-fastapi-react.md) and [04](04-pywebview-native-window.md); the scoring is in [05](05-comparison-and-roadmap.md).
 
 **01 — Modernise PySide6 Widgets.** Lowest technical risk and best native integration; offline, single process, no new tools. But QSS is a CSS subset (no layout engines, effects or transitions), every modern component is custom-built, iteration is slow, and the ecosystem of ready-made components is small. It does not avoid the ~70k-line UI rewrite; it only keeps the toolkit. _Reason to choose:_ an extra process boundary or runtime is unacceptable. _Reason not to:_ lowest UI ceiling.
 
@@ -114,7 +114,7 @@ Full write-ups with pros, cons and comparisons are in files `01`, `02`, `03`, `0
 
 ### 5.1 Size of the compiled program
 
-Qt binaries are part of the compiled output whenever Qt is involved. The figures are **measured from the Windows wheels on PyPI** (file lists of PySide6 6.9.0 Essentials and Addons, OpenCV, SciPy, NumPy, pandas, scikit-image, matplotlib, pywebview, pythonnet), not from a real build. Full tables are in `05-comparison-and-roadmap.md`.
+Qt binaries are part of the compiled output whenever Qt is involved. The figures are **measured from the Windows wheels on PyPI** (file lists of PySide6 6.9.0 Essentials and Addons, OpenCV, SciPy, NumPy, pandas, scikit-image, matplotlib, pywebview, pythonnet), not from a real build. Full tables are in [05-comparison-and-roadmap.md](05-comparison-and-roadmap.md).
 
 | UI layer        | What is bundled                                                                                                                                            | Added unpacked | Added compressed |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------: | ---------------: |
@@ -172,7 +172,7 @@ The fallback is a launcher feature, not behaviour built into pywebview: the laun
 | 03 Browser                |                           86 |                        80 |                       84.8 |
 | **04 pywebview window**   |                       **94** |                        74 |                   **90.0** |
 
-Per-criterion scores, reasons and the two-axis view are in `05-comparison-and-roadmap.md`.
+Per-criterion scores, reasons and the two-axis view are in [05-comparison-and-roadmap.md](05-comparison-and-roadmap.md).
 
 ### 5.5 Sensitivity
 
@@ -308,4 +308,4 @@ The processing engine of piXeval is largely independent of its user interface, s
 2. Qt for Python, _QtWebChannel_, <https://doc.qt.io/qtforpython-6/PySide6/QtWebChannel/index.html>
 3. Python GUIs, _HTML, CSS and JS in a desktop app (Qt WebEngine)_, <https://www.pythonguis.com/faq/html-css-and-js-in-a-desktop-app-qt-webengine-vs-electron-vs/>
 4. pywebview 6.x package listing, <https://www.archlinux.org/packages/extra/any/python-pywebview>
-5. piXeval repository metrics: `research/00-baseline-current-stack.md`
+5. piXeval repository metrics: [00-baseline-current-stack.md](00-baseline-current-stack.md)
