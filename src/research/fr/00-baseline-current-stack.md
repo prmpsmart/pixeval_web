@@ -4,32 +4,32 @@ _Mesuré à partir du dépôt `pixeval` (7.6.2) sur cette machine. Les chiffres 
 
 ## La pile en un coup d'œil
 
-| Domaine                       | Ce qui est utilisé                                                                                                                       |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Langage / exécution           | Python 3.12 (dev), wheels figées pour 3.13 dans `requirements.txt`                                                                       |
-| Interface                     | **PySide6 6.9.0 – Qt Widgets** (aussi `QtGui`, `QtCore`, `QtPrintSupport`, `QtPdf`, `QtPdfWidgets`). Aucun usage de `QtWebEngine` trouvé |
-| Styles                        | QSS écrit à la main (`kitchen/style-v7.6.0.qss`, ~1 100 lignes), ~1 750 icônes SVG, animations Lottie (`rlottie-python`, `qt-lottie`)    |
-| Données                       | SQLite via une enveloppe maison par thread (`src/db/databases.py`) ; `psycopg2` est également présent                                    |
-| OMR / vision                  | OpenCV, NumPy, scikit-image, pyzbar, pytesseract                                                                                         |
-| Documents                     | reportlab, xhtml2pdf, pypdf, python-docx, openpyxl, XlsxWriter, pandas                                                                   |
-| Réseau / e-mail               | requests, google-api-client, zeep, `deep-translator`, `google-cloud-translate`                                                           |
-| **Pile web déjà présente**    | **FastAPI 0.115 + Uvicorn 0.34 + Starlette** (utilisée par `kitchen/remote_pixeval/server`, le service CAT distant)                      |
-| Empaquetage                   | PyInstaller 6.13 (`compile/*.spec`) + Inno Setup (`compile/piXeval.iss`) → installateur Windows                                          |
-| Concurrence                   | Presque aucune (`threading.Thread` une fois). Les tâches longues signalent leur progression via des objets Qt `SignalInstance` passés à la logique |
+| Domaine                    | Ce qui est utilisé                                                                                                                                 |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Langage / exécution        | Python 3.12 (dev), wheels figées pour 3.13 dans `requirements.txt`                                                                                 |
+| Interface                  | **PySide6 6.9.0 – Qt Widgets** (aussi `QtGui`, `QtCore`, `QtPrintSupport`, `QtPdf`, `QtPdfWidgets`). Aucun usage de `QtWebEngine` trouvé           |
+| Styles                     | QSS écrit à la main (`kitchen/style-v7.6.0.qss`, ~1 100 lignes), ~1 750 icônes SVG, animations Lottie (`rlottie-python`, `qt-lottie`)              |
+| Données                    | SQLite via une enveloppe maison par thread (`src/db/databases.py`) ; `psycopg2` est également présent                                              |
+| OMR / vision               | OpenCV, NumPy, scikit-image, pyzbar, pytesseract                                                                                                   |
+| Documents                  | reportlab, xhtml2pdf, pypdf, python-docx, openpyxl, XlsxWriter, pandas                                                                             |
+| Réseau / e-mail            | requests, google-api-client, zeep, `deep-translator`, `google-cloud-translate`                                                                     |
+| **Pile web déjà présente** | **FastAPI 0.115 + Uvicorn 0.34 + Starlette** (utilisée par `kitchen/remote_pixeval/server`, le service CAT distant)                                |
+| Empaquetage                | PyInstaller 6.13 (`compile/*.spec`) + Inno Setup (`compile/piXeval.iss`) → installateur Windows                                                    |
+| Concurrence                | Presque aucune (`threading.Thread` une fois). Les tâches longues signalent leur progression via des objets Qt `SignalInstance` passés à la logique |
 
 Le dépôt contient plusieurs applications, pas une seule : **piXeval**, **pixEBAP02**, **CAT3 Audit**, une **Modern UI** inachevée (`src/modern_ui`) et un service FastAPI **Remote CAT**.
 
 ## Taille de chaque couche
 
-| Couche                                            | Fichiers Python |         Lignes | Importe Qt                                                          |
-| ------------------------------------------------- | --------------: | -------------: | ------------------------------------------------------------------- |
-| `src/ui` (interface PySide6 actuelle)             |             194 |     **71 077** | toute                                                               |
-| `src/modern_ui` (refonte PySide6, en cours)       |              28 |          2 301 | toute                                                               |
-| `src/db`                                          |               7 |          3 648 | 1 fichier (`databases.py`, un import de `QApplication`)             |
-| `src/omr` (+ copie de même taille `src/omr_audit`) |       16 (+16) | 6 704 (+6 704) | **0 fichier**                                                       |
-| `src/cat_lib`                                     |              13 |          4 832 | 3 fichiers (`SignalInstance`, `QDesktopServices`, `QPixmap/QImage`) |
-| `src/dataReports`                                 |               9 |            830 | 1 fichier (`QImage`)                                                |
-| `src/utils`                                       |              28 |          5 242 | 2 fichiers (`SignalInstance` pour le suivi de progression)          |
+| Couche                                             | Fichiers Python |         Lignes | Importe Qt                                                          |
+| -------------------------------------------------- | --------------: | -------------: | ------------------------------------------------------------------- |
+| `src/ui` (interface PySide6 actuelle)              |             194 |     **71 077** | toute                                                               |
+| `src/modern_ui` (refonte PySide6, en cours)        |              28 |          2 301 | toute                                                               |
+| `src/db`                                           |               7 |          3 648 | 1 fichier (`databases.py`, un import de `QApplication`)             |
+| `src/omr` (+ copie de même taille `src/omr_audit`) |        16 (+16) | 6 704 (+6 704) | **0 fichier**                                                       |
+| `src/cat_lib`                                      |              13 |          4 832 | 3 fichiers (`SignalInstance`, `QDesktopServices`, `QPixmap/QImage`) |
+| `src/dataReports`                                  |               9 |            830 | 1 fichier (`QImage`)                                                |
+| `src/utils`                                        |              28 |          5 242 | 2 fichiers (`SignalInstance` pour le suivi de progression)          |
 
 ## Ce que cela signifie
 

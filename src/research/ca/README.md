@@ -8,14 +8,14 @@ Pregunta: quines opcions hi ha per millorar la interfície i l'experiència d'ú
 
 **Comenceu per l'[informe tècnic final](06-final-technical-report.md).** La resta d'arxius són notes de suport, cadascuna amb avantatges, inconvenients i comparacions amb les altres opcions.
 
-| Document                                                                 | Contingut                                                                                                                      |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| [Informe tècnic final](06-final-technical-report.md)                     | Problema, mètode, anàlisi, recomanació, riscos, pla                                                                            |
-| [00 · Base de partida: la pila actual](00-baseline-current-stack.md)     | Dades mesurades de la base de codi actual                                                                                      |
-| [01 · Modernitzar Qt Widgets](01-pyside6-widgets-modernised.md)          | Quedar-se a Qt Widgets i modernitzar-lo                                                                                        |
-| [02 · Híbrid Qt WebEngine](02-qt-webengine-hybrid.md)                    | Interfície web dins l'aplicació Qt (navegador integrat)                                                                        |
-| [03 · Aplicació web local al navegador](03-local-web-app-fastapi-react.md) | Backend en Python (FastAPI) amb el navegador extern                                                                          |
-| [04 · Aplicació web local en una finestra pywebview](04-pywebview-native-window.md) | El mateix, en una finestra nativa (recomanada)                                                                      |
-| [05 · Comparació i full de ruta](05-comparison-and-roadmap.md)           | Puntuació d'usuari final davant de facilitat amb Python, les dues decisions, classificació combinada, sensibilitat, full de ruta, fonts |
+| Document                                                                            | Contingut                                                                                                                               |
+| ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| [Informe tècnic final](06-final-technical-report.md)                                | Problema, mètode, anàlisi, recomanació, riscos, pla                                                                                     |
+| [00 · Base de partida: la pila actual](00-baseline-current-stack.md)                | Dades mesurades de la base de codi actual                                                                                               |
+| [01 · Modernitzar Qt Widgets](01-pyside6-widgets-modernised.md)                     | Quedar-se a Qt Widgets i modernitzar-lo                                                                                                 |
+| [02 · Híbrid Qt WebEngine](02-qt-webengine-hybrid.md)                               | Interfície web dins l'aplicació Qt (navegador integrat)                                                                                 |
+| [03 · Aplicació web local al navegador](03-local-web-app-fastapi-react.md)          | Backend en Python (FastAPI) amb el navegador extern                                                                                     |
+| [04 · Aplicació web local en una finestra pywebview](04-pywebview-native-window.md) | El mateix, en una finestra nativa (recomanada)                                                                                          |
+| [05 · Comparació i full de ruta](05-comparison-and-roadmap.md)                      | Puntuació d'usuari final davant de facilitat amb Python, les dues decisions, classificació combinada, sensibilitat, full de ruta, fonts |
 
 Salvetats: les puntuacions són valoracions de criteri; la mida de l'instal·lador, el rendiment i les dades dels equips de destinació no s'han mesurat (vegeu la secció 9 de l'informe).

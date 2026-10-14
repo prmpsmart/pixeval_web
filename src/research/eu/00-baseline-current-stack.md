@@ -4,32 +4,32 @@ _`pixeval` biltegitik (7.6.2) neurtua, makina honetan. Zifrak `.py` fitxategien 
 
 ## Pila begirada batean
 
-| Eremua                        | Zer erabiltzen den                                                                                                                       |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Lengoaia / exekuzioa          | Python 3.12 (garapena), 3.13rako wheel finkatuak `requirements.txt`-en                                                                   |
+| Eremua                        | Zer erabiltzen den                                                                                                                                    |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Lengoaia / exekuzioa          | Python 3.12 (garapena), 3.13rako wheel finkatuak `requirements.txt`-en                                                                                |
 | Interfazea                    | **PySide6 6.9.0 – Qt Widgets** (baita `QtGui`, `QtCore`, `QtPrintSupport`, `QtPdf`, `QtPdfWidgets` ere). Ez da `QtWebEngine`-ren erabilerarik aurkitu |
-| Estiloak                      | Eskuz idatzitako QSS (`kitchen/style-v7.6.0.qss`, ~1.100 lerro), ~1.750 SVG ikono, Lottie animazioak (`rlottie-python`, `qt-lottie`)     |
-| Datuak                        | SQLite hari bakoitzeko bilgarri propio baten bidez (`src/db/databases.py`); `psycopg2` ere badago                                        |
-| OMR / ikusmena                | OpenCV, NumPy, scikit-image, pyzbar, pytesseract                                                                                         |
-| Dokumentuak                   | reportlab, xhtml2pdf, pypdf, python-docx, openpyxl, XlsxWriter, pandas                                                                   |
-| Sarea / posta                 | requests, google-api-client, zeep, `deep-translator`, `google-cloud-translate`                                                           |
-| **Dagoeneko dagoen web-pila** | **FastAPI 0.115 + Uvicorn 0.34 + Starlette** (`kitchen/remote_pixeval/server`-ek erabilia, urruneko CAT zerbitzua)                       |
-| Paketatzea                    | PyInstaller 6.13 (`compile/*.spec`) + Inno Setup (`compile/piXeval.iss`) → Windows instalatzailea                                        |
-| Konkurrentzia                 | Ia ezer ez (`threading.Thread` behin). Zeregin luzeek aurrerapena Qt `SignalInstance` objektuen bidez jakinarazten dute, logikara pasatuta |
+| Estiloak                      | Eskuz idatzitako QSS (`kitchen/style-v7.6.0.qss`, ~1.100 lerro), ~1.750 SVG ikono, Lottie animazioak (`rlottie-python`, `qt-lottie`)                  |
+| Datuak                        | SQLite hari bakoitzeko bilgarri propio baten bidez (`src/db/databases.py`); `psycopg2` ere badago                                                     |
+| OMR / ikusmena                | OpenCV, NumPy, scikit-image, pyzbar, pytesseract                                                                                                      |
+| Dokumentuak                   | reportlab, xhtml2pdf, pypdf, python-docx, openpyxl, XlsxWriter, pandas                                                                                |
+| Sarea / posta                 | requests, google-api-client, zeep, `deep-translator`, `google-cloud-translate`                                                                        |
+| **Dagoeneko dagoen web-pila** | **FastAPI 0.115 + Uvicorn 0.34 + Starlette** (`kitchen/remote_pixeval/server`-ek erabilia, urruneko CAT zerbitzua)                                    |
+| Paketatzea                    | PyInstaller 6.13 (`compile/*.spec`) + Inno Setup (`compile/piXeval.iss`) → Windows instalatzailea                                                     |
+| Konkurrentzia                 | Ia ezer ez (`threading.Thread` behin). Zeregin luzeek aurrerapena Qt `SignalInstance` objektuen bidez jakinarazten dute, logikara pasatuta            |
 
 Biltegiak hainbat aplikazio ditu, ez bakarra: **piXeval**, **pixEBAP02**, **CAT3 Audit**, amaitu gabeko **Modern UI** bat (`src/modern_ui`) eta **Remote CAT** FastAPI zerbitzu bat.
 
 ## Geruza bakoitzaren tamaina
 
-| Geruza                                            | Python fitxategiak |          Lerroak | Qt inportatzen du                                                      |
-| ------------------------------------------------- | -----------------: | ---------------: | ---------------------------------------------------------------------- |
-| `src/ui` (PySide6 interfaze egungoa)              |                194 |       **71.077** | guztia                                                                 |
-| `src/modern_ui` (PySide6 birdiseinua, abian)      |                 28 |            2.301 | guztia                                                                 |
-| `src/db`                                          |                  7 |            3.648 | fitxategi 1 (`databases.py`, `QApplication` inportazio bat)            |
-| `src/omr` (+ tamaina bereko kopia `src/omr_audit`) |           16 (+16) | 6.704 (+6.704)   | **0 fitxategi**                                                        |
-| `src/cat_lib`                                     |                 13 |            4.832 | 3 fitxategi (`SignalInstance`, `QDesktopServices`, `QPixmap/QImage`)   |
-| `src/dataReports`                                 |                  9 |              830 | fitxategi 1 (`QImage`)                                                 |
-| `src/utils`                                       |                 28 |            5.242 | 2 fitxategi (`SignalInstance`, aurrerapena jakinarazteko)              |
+| Geruza                                             | Python fitxategiak |        Lerroak | Qt inportatzen du                                                    |
+| -------------------------------------------------- | -----------------: | -------------: | -------------------------------------------------------------------- |
+| `src/ui` (PySide6 interfaze egungoa)               |                194 |     **71.077** | guztia                                                               |
+| `src/modern_ui` (PySide6 birdiseinua, abian)       |                 28 |          2.301 | guztia                                                               |
+| `src/db`                                           |                  7 |          3.648 | fitxategi 1 (`databases.py`, `QApplication` inportazio bat)          |
+| `src/omr` (+ tamaina bereko kopia `src/omr_audit`) |           16 (+16) | 6.704 (+6.704) | **0 fitxategi**                                                      |
+| `src/cat_lib`                                      |                 13 |          4.832 | 3 fitxategi (`SignalInstance`, `QDesktopServices`, `QPixmap/QImage`) |
+| `src/dataReports`                                  |                  9 |            830 | fitxategi 1 (`QImage`)                                               |
+| `src/utils`                                        |                 28 |          5.242 | 2 fitxategi (`SignalInstance`, aurrerapena jakinarazteko)            |
 
 ## Honek zer esan nahi duen
 

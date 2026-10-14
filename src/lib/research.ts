@@ -1,5 +1,7 @@
-/** Research documents: the Markdown files in `src/research/`, bundled at build time. */
-const files = import.meta.glob('/src/research/*.md', {
+import { getLanguage } from '../i18n/runtime'
+
+/** Research documents: the Markdown files in `src/research/` (English) and `src/research/<lang>/`, bundled at build time. */
+const files = import.meta.glob('/src/research/**/*.md', {
   query: '?raw',
   import: 'default',
   eager: true,
@@ -29,11 +31,23 @@ const titleOf = (body: string, fallback: string) => /^#\s+(.+)$/m.exec(body)?.[1
 /** Index first, then the final report, then the numbered notes in order. */
 const rank = (id: string) => (id === 'README' ? 0 : id.startsWith('06-') ? 1 : 2)
 
-export const docs: ResearchDoc[] = Object.entries(files)
-  .map(([path, body]) => {
-    const id = path.split('/').pop()!.replace(/\.md$/, '')
-    return { id, title: titleOf(body, id), label: LABELS[id] ?? titleOf(body, id), body }
-  })
-  .sort((a, b) => rank(a.id) - rank(b.id) || a.id.localeCompare(b.id))
+/** Localised label: the document's own title up to the first colon, e.g. "03 · Local web app". */
+const shortTitle = (title: string) => title.split(/:| — /)[0].trim()
 
-export const findDoc = (id?: string) => docs.find((d) => d.id === (id ?? 'README'))
+/** Documents for the current language; a missing translation falls back to English. */
+export function getDocs(): ResearchDoc[] {
+  const lang = getLanguage()
+  const byId = new Map<string, ResearchDoc>()
+  for (const l of lang === 'en' ? ['en'] : ['en', lang]) {
+    for (const [path, body] of Object.entries(files)) {
+      const parts = path.replace('/src/research/', '').split('/')
+      if ((parts.length === 1 ? 'en' : parts[0]) !== l) continue
+      const id = parts[parts.length - 1].replace(/\.md$/, '')
+      const title = titleOf(body, id)
+      byId.set(id, { id, title, label: l === 'en' ? (LABELS[id] ?? title) : shortTitle(title), body })
+    }
+  }
+  return [...byId.values()].sort((a, b) => rank(a.id) - rank(b.id) || a.id.localeCompare(b.id))
+}
+
+export const findDoc = (docs: ResearchDoc[], id?: string) => docs.find((d) => d.id === (id ?? 'README'))

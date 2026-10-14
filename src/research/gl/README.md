@@ -8,14 +8,14 @@ Pregunta: que opcións hai para mellorar a interface e a experiencia de uso de p
 
 **Comeza polo [informe técnico final](06-final-technical-report.md).** O resto dos ficheiros son notas de apoio, cada unha con vantaxes, inconvenientes e comparacións coas demais opcións.
 
-| Documento                                                                | Contido                                                                                                                        |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| [Informe técnico final](06-final-technical-report.md)                    | Problema, método, análise, recomendación, riscos, plan                                                                         |
-| [00 · Base de partida: a pila actual](00-baseline-current-stack.md)      | Datos medidos da base de código actual                                                                                         |
-| [01 · Modernizar Qt Widgets](01-pyside6-widgets-modernised.md)           | Quedar en Qt Widgets e modernizalo                                                                                             |
-| [02 · Híbrido Qt WebEngine](02-qt-webengine-hybrid.md)                   | Interface web dentro da aplicación Qt (navegador integrado)                                                                    |
-| [03 · Aplicación web local no navegador](03-local-web-app-fastapi-react.md) | Backend en Python (FastAPI) co navegador externo                                                                            |
-| [04 · Aplicación web local nunha xanela pywebview](04-pywebview-native-window.md) | O mesmo, nunha xanela nativa (recomendada)                                                                            |
-| [05 · Comparación e folla de ruta](05-comparison-and-roadmap.md)         | Puntuación de usuario final fronte a facilidade con Python, as dúas decisións, clasificación combinada, sensibilidade, folla de ruta, fontes |
+| Documento                                                                         | Contido                                                                                                                                      |
+| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Informe técnico final](06-final-technical-report.md)                             | Problema, método, análise, recomendación, riscos, plan                                                                                       |
+| [00 · Base de partida: a pila actual](00-baseline-current-stack.md)               | Datos medidos da base de código actual                                                                                                       |
+| [01 · Modernizar Qt Widgets](01-pyside6-widgets-modernised.md)                    | Quedar en Qt Widgets e modernizalo                                                                                                           |
+| [02 · Híbrido Qt WebEngine](02-qt-webengine-hybrid.md)                            | Interface web dentro da aplicación Qt (navegador integrado)                                                                                  |
+| [03 · Aplicación web local no navegador](03-local-web-app-fastapi-react.md)       | Backend en Python (FastAPI) co navegador externo                                                                                             |
+| [04 · Aplicación web local nunha xanela pywebview](04-pywebview-native-window.md) | O mesmo, nunha xanela nativa (recomendada)                                                                                                   |
+| [05 · Comparación e folla de ruta](05-comparison-and-roadmap.md)                  | Puntuación de usuario final fronte a facilidade con Python, as dúas decisións, clasificación combinada, sensibilidade, folla de ruta, fontes |
 
 Salvidades: as puntuacións son valoracións de criterio; o tamaño do instalador, o rendemento e os datos dos equipos de destino non se mediron (véxase a sección 9 do informe).

@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Btn, Card, Empty, Icon, PageHead } from '../components/ui'
-import { docs, findDoc } from '../lib/research'
+import { findDoc, getDocs } from '../lib/research'
 
 /** `05-comparison-and-roadmap.md` or `README.md#x` → route id, otherwise undefined. */
 const docLink = (href?: string) => /^([\w.-]+)\.md(#.*)?$/.exec(href ?? '')?.[1]
@@ -28,7 +28,8 @@ const Table = (props: ComponentProps<'table'>) => (
 export function Research() {
   const { doc: id } = useParams()
   const nav = useNavigate()
-  const current = findDoc(id)
+  const docs = getDocs()
+  const current = findDoc(docs, id)
 
   return (
     <>
