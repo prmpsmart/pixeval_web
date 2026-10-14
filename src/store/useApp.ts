@@ -12,7 +12,7 @@ import type {
 } from '../data/types'
 import { now } from '../lib/domain'
 
-const STORE = 'pixeval-react-v1'
+const STORE = 'pixeval-react-v3'
 const SAVING = `${STORE}:saving`
 
 export type DialogName =

@@ -52,3 +52,12 @@ Replace those with API calls; the screens don't change.
 ## Publish to GitHub Pages
 
 `npm run build`, then publish `dist/` (for example with a Pages workflow or the `gh-pages` branch). Asset paths are relative.
+
+## Languages
+
+The interface and the research documents are available in English, Spanish (`es`), French (`fr`), Galician (`gl`), Catalan (`ca`) and Basque (`eu`). Pick one in the sidebar, or open the app with `?lang=xx`.
+
+- Source code stays plain English. A build-time Vite plugin (`tools/i18n/`) finds the UI text and looks it up in `src/i18n/locales/<lang>.json`.
+- `npm run i18n:extract` lists the strings and reports each language's coverage. Add `--missing` to write the untranslated ones to `tools/i18n/missing/`.
+- Add `?pseudo` to the URL in development to wrap text in ⟦ ⟧ and spot anything untranslated.
+- Research documents live in `src/research/` (English) and `src/research/<lang>/`; a missing translation falls back to English.

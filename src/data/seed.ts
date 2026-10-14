@@ -1,4 +1,4 @@
-import type { DataState, Letter, Participant, Question } from './types'
+import type { DataState, Exam, Letter, Participant, Question } from './types'
 
 /** Deterministic sample data mirroring the piXeval v7.6.0 sample database. */
 let seed = 20260102
@@ -124,6 +124,132 @@ export function buildSeed(): DataState {
       marked: false,
     })
   }
+  /** Two smaller subjects so the library, filters and subject switching have something to show. */
+  const extras = [
+    {
+      id: 'AA',
+      name: 'Auxiliar Administrativo',
+      group: '2025 | 2',
+      exam: 'Examen AA',
+      date: '2026-01-15',
+      topics: ['Organización del Estado', 'Procedimiento administrativo'],
+      qs: 30,
+      people: 24,
+    },
+    {
+      id: 'GP',
+      name: 'Gestión Procesal',
+      group: '2025 | 1',
+      exam: 'Examen GP',
+      date: '2026-01-22',
+      topics: ['Actos procesales', 'Plazos y notificaciones', 'Recursos'],
+      qs: 24,
+      people: 18,
+    },
+  ]
+  let nextQ = 101,
+    nextTopic = 2,
+    nextId = 24054000
+  const topics = [{ id: 1, subject: 'TJ', name: 'Tema de la Matriz de Corrección', chapter: 1 }]
+  const exams: Exam[] = [
+    {
+      id: 1,
+      subject: 'TJ',
+      name: 'Examen TJ',
+      date: '2026-01-02',
+      model: 1,
+      models: 1,
+      created: '2026-02-19 11:57:38',
+      status: 'open',
+      recalc: 'No',
+    },
+  ]
+  extras.forEach((x, xi) => {
+    const topicIds = x.topics.map((name, ti) => {
+      topics.push({ id: nextTopic, subject: x.id, name, chapter: ti + 1 })
+      return nextTopic++
+    })
+    const qs: Question[] = []
+    for (let i = 1; i <= x.qs; i++) {
+      const key = pick(letters)
+      qs.push({
+        id: nextQ++,
+        subject: x.id,
+        topic: topicIds[i % topicIds.length],
+        type: 'MC',
+        key,
+        text: `Pregunta ${i} de ${x.name}, respuesta correcta ${key}`,
+        opts: {
+          a: `Opción A de la pregunta ${i}`,
+          b: `Opción B de la pregunta ${i}`,
+          c: `Opción C de la pregunta ${i}`,
+        },
+        used: 1,
+        mods: 1,
+      })
+    }
+    questions.push(...qs)
+    for (let i = 0; i < x.people; i++) {
+      const name = pick(names),
+        s1 = pick(surnames),
+        s2 = pick(surnames)
+      const ability = 0.4 + rnd() * 0.5
+      const answers: Participant['answers'] = {}
+      qs.forEach((q) => {
+        const r = rnd()
+        answers[q.id] =
+          r < ability ? q.key : r < ability + 0.07 ? '-' : pick(letters.filter((l) => l !== q.key))
+      })
+      participants.push({
+        sn: i + 1,
+        subject: x.id,
+        id: String(nextId++),
+        barcode: String(191000000 + (xi * 100 + i) * 131),
+        dni: String(10000000 + Math.floor(rnd() * 89999999)) + pick('TRWAGMYFPDXBNJZSQVHLCKE'.split('')),
+        name,
+        surnames: `${s1} ${s2}`,
+        email: `${noAccent(name)}.${noAccent(s1)}@example.org`,
+        phone: '6' + String(10000000 + Math.floor(rnd() * 89999999)),
+        group: x.group,
+        answers,
+        assigned: false,
+        marked: false,
+      })
+    }
+    exams.push({
+      id: exams.length + 1,
+      subject: x.id,
+      name: x.exam,
+      date: x.date,
+      model: 1,
+      models: 1,
+      created: `${x.date} 10:00:00`,
+      status: 'open',
+      recalc: 'No',
+    })
+  })
+  /** Earlier and follow-up exams, so closing, recalculation and the exam pickers have variety. */
+  const more: [string, string, string, number, 'open' | 'closed', 'Yes' | 'No'][] = [
+    ['TJ', 'Simulacro TJ', '2025-11-20', 2, 'closed', 'Yes'],
+    ['TJ', 'Examen TJ (recuperación)', '2026-02-12', 1, 'open', 'No'],
+    ['AA', 'Simulacro AA', '2025-12-10', 1, 'closed', 'No'],
+    ['AA', 'Examen AA (segunda convocatoria)', '2026-02-05', 2, 'open', 'No'],
+    ['GP', 'Simulacro GP', '2025-12-18', 1, 'closed', 'Yes'],
+  ]
+  more.forEach(([subject, name, date, models, status, recalc]) =>
+    exams.push({
+      id: exams.length + 1,
+      subject,
+      name,
+      date,
+      model: 1,
+      models,
+      created: `${date} 09:30:00`,
+      status,
+      recalc,
+    }),
+  )
+
   const acts = [
     'Login',
     'Open database',
@@ -153,22 +279,10 @@ export function buildSeed(): DataState {
   })).sort((a, b) => b.time.localeCompare(a.time))
 
   return {
-    subjects: [{ id: 'TJ', name: 'Técnico Jurídico' }],
-    topics: [{ id: 1, subject: 'TJ', name: 'Tema de la Matriz de Corrección', chapter: 1 }],
-    groups: ['2025 | 1'],
-    exams: [
-      {
-        id: 1,
-        subject: 'TJ',
-        name: 'Examen TJ',
-        date: '2026-01-02',
-        model: 1,
-        models: 1,
-        created: '2026-02-19 11:57:38',
-        status: 'open',
-        recalc: 'No',
-      },
-    ],
+    subjects: [{ id: 'TJ', name: 'Técnico Jurídico' }, ...extras.map((x) => ({ id: x.id, name: x.name }))],
+    topics,
+    groups: ['2025 | 1', '2025 | 2'],
+    exams,
     questions,
     participants,
     logs,
