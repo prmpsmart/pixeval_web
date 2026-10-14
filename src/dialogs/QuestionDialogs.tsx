@@ -6,6 +6,7 @@ import { difficulty, difficultyLabel, levelTone } from '../lib/domain'
 import { useSubjectData } from '../lib/hooks'
 import type { Letter } from '../data/types'
 import { useApp } from '../store/useApp'
+import { translate } from '../i18n/runtime'
 
 const LETTERS: Letter[] = ['a', 'b', 'c']
 
@@ -50,9 +51,12 @@ export function QuestionDialog({ arg }: { arg?: string }) {
       icon="edit"
       title={isNew ? 'New question' : `Question ${src!.id}`}
       sub={
-        src
-          ? `${src.mods} modification${src.mods === 1 ? '' : 's'} · used in ${src.used} exam${src.used === 1 ? '' : 's'}`
-          : undefined
+        src ? (
+          <>
+            {`${src.mods} modification${src.mods === 1 ? '' : 's'}`} ·{' '}
+            {`used in ${src.used} exam${src.used === 1 ? '' : 's'}`}
+          </>
+        ) : undefined
       }
       footer={
         <>
@@ -161,7 +165,7 @@ export function SearchQuestionsDialog() {
             </span>
             {x.text}
             <span style={{ marginLeft: 'auto' }}>
-              <Pill tone={levelTone[difficultyLabel(data, x)]}>{difficultyLabel(data, x)}</Pill>
+              <Pill tone={levelTone[difficultyLabel(data, x)]}>{translate(difficultyLabel(data, x))}</Pill>
             </span>
           </div>
         ))}

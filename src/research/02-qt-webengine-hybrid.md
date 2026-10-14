@@ -4,11 +4,11 @@
 
 ## What it is
 
-Qt WebEngine embeds Chromium as a widget. `QtWebChannel` gives peer-to-peer communication between Python objects and JavaScript in the page (supported out of the box by WebEngine). The web screens can be built with React/Vite, as in the preview in this repo.
+Qt WebEngine embeds Chromium as a widget. `QtWebChannel` gives peer-to-peer communication between Python objects and JavaScript in the page (supported out of the box by WebEngine). The web screens can be built with React/Vite, as in the interactive preview.
 
 ## How it fits piXeval
 
-- The current app keeps running. Screens are migrated one at a time: a new web screen is opened in a `QWebEngineView` while remaining screens stay Widgets.
+- The current Qt application stays the host: each screen is a web page opened in a `QWebEngineView`.
 - Python services are exposed as channel objects (or the same logic is also exposed over a localhost API).
 - Native file/folder dialogs, printing and PDF remain Qt calls.
 - Packaging stays PyInstaller + Inno Setup, with QtWebEngine resources added.

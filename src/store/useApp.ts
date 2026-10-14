@@ -73,7 +73,6 @@ interface UI {
   exam: string
   group: string
   paths: Record<string, string>
-  lang: 'English' | 'Español'
   stack: DialogEntry[]
   confirm?: Confirm
   toasts: Toast[]
@@ -222,7 +221,6 @@ export const useApp = create<AppState>((set, get) => {
     exam: base.exam ?? String(base.exams[0]?.id ?? ''),
     group: base.group ?? base.groups[0] ?? '',
     paths: base.paths ?? {},
-    lang: 'English',
     stack: [],
     toasts: [],
     selectedQuestions: [],

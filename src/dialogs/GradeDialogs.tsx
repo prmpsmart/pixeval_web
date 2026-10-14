@@ -67,8 +67,9 @@ export function ReportDialog({ arg }: { arg?: string }) {
           <div className="sec-t">Formula</div>
           <span className="formula">{data.formula}</span>
           <div className="hint" style={{ marginTop: 12 }}>
-            Model 1 · {s.N} questions counted
-            {data.cancelled.length ? ` (${data.cancelled.length} cancelled)` : ''}
+            {data.cancelled.length
+              ? `Model 1 · ${s.N} questions counted (${data.cancelled.length} cancelled)`
+              : `Model 1 · ${s.N} questions counted`}
           </div>
           {!done && (
             <div className="hint" style={{ color: 'var(--warn)' }}>

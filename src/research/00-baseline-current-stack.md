@@ -45,7 +45,6 @@ The repo holds several apps, not one: **piXeval**, **pixEBAP02**, **CAT3 Audit**
 - Actual installer / install size, since `dist/` is not in the repo. OpenCV, SciPy and Qt probably dominate it.
 - Real-world UI performance on large tables (the grades screen holds 100s–1000s of rows).
 - Behaviour on both Windows 10 and Windows 11 (WebView2 is available on all client machines).
-- Which team members can write TypeScript/React.
 
 ## Reading order
 

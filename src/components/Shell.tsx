@@ -3,12 +3,15 @@ import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Icon } from './ui'
 import { NAV, type NavItem } from '../lib/nav'
 import { useApp } from '../store/useApp'
+import { tr } from '../i18n/mark'
+import { LANGS, setLanguage, translate, useLanguage, type LangCode } from '../i18n/runtime'
 import { USER } from '../data/seed'
 
 const section = (path: string) => '/' + (path.split('/')[1] ?? '')
 
 function Sidebar({ onNavigate }: { onNavigate: () => void }) {
-  const { subjects, subject, participants, questions, exams, lang, open, set } = useApp()
+  const { subjects, subject, participants, questions, exams, open } = useApp()
+  const lang = useLanguage()
   const nav = useNavigate()
   const sub = subjects.find((s) => s.id === subject) ?? subjects[0]
   const counts: Record<string, number> = {
@@ -18,7 +21,7 @@ function Sidebar({ onNavigate }: { onNavigate: () => void }) {
     exams: exams.length,
   }
   const item = (n: NavItem) => {
-    const label = lang === 'Español' ? n.es : n.label
+    const label = translate(n.label)
     const inner = (
       <>
         {<Icon name={n.icon} />}
@@ -77,17 +80,14 @@ function Sidebar({ onNavigate }: { onNavigate: () => void }) {
         {NAV.filter((n) => n.group === 'foot').map(item)}
         <label className="lang">
           <Icon name="globe" />
-          {lang}
+          {LANGS.find((l) => l.code === lang)?.name}
           <Icon name="chev" />
-          <select
-            value={lang}
-            onChange={(e) => {
-              set({ lang: e.target.value as 'English' | 'Español' })
-              useApp.getState().toast('Interface language: ' + e.target.value, 'Demo: navigation labels only')
-            }}
-          >
-            <option>English</option>
-            <option>Español</option>
+          <select value={lang} onChange={(e) => setLanguage(e.target.value as LangCode)}>
+            {LANGS.map((l) => (
+              <option key={l.code} value={l.code}>
+                {l.name}
+              </option>
+            ))}
           </select>
         </label>
       </div>
@@ -107,10 +107,10 @@ function Topbar({ crumbs, onMenu }: { crumbs: string[]; onMenu: () => void }) {
       <div className="crumb">
         {crumbs.map((c, i) =>
           i === crumbs.length - 1 ? (
-            <b key={i}>{c}</b>
+            <b key={i}>{translate(c)}</b>
           ) : (
             <span key={i} style={{ display: 'contents' }}>
-              {c}
+              {translate(c)}
               <Icon name="right" />
             </span>
           ),
@@ -191,22 +191,22 @@ function Topbar({ crumbs, onMenu }: { crumbs: string[]; onMenu: () => void }) {
 }
 
 const CRUMBS: Record<string, string[]> = {
-  '/dashboard': ['Library', 'Dashboard'],
-  '/subjects': ['Library', 'Subjects'],
-  '/questions': ['Library', 'Questions'],
-  '/participants': ['Library', 'Participants'],
-  '/exams': ['Examination', 'Exams'],
-  '/add-exam': ['Examination', 'Add exam'],
-  '/sheets': ['Examination', 'Sheets management'],
-  '/corrections': ['Examination', 'Corrections'],
-  '/assign': ['Examination', 'Assign identities'],
-  '/grades': ['Examination', 'Grades'],
-  '/reserve': ['Examination', 'Reserve questions'],
-  '/history': ['Examination', 'History'],
-  '/close': ['Examination', 'Close exams'],
-  '/utilities': ['System', 'Utilities'],
-  '/errors': ['Examination', 'Grades', 'Errors'],
-  '/research': ['System', 'Research'],
+  '/dashboard': [tr('Library'), tr('Dashboard')],
+  '/subjects': [tr('Library'), tr('Subjects')],
+  '/questions': [tr('Library'), tr('Questions')],
+  '/participants': [tr('Library'), tr('Participants')],
+  '/exams': [tr('Examination'), tr('Exams')],
+  '/add-exam': [tr('Examination'), tr('Add exam')],
+  '/sheets': [tr('Examination'), tr('Sheets management')],
+  '/corrections': [tr('Examination'), tr('Corrections')],
+  '/assign': [tr('Examination'), tr('Assign identities')],
+  '/grades': [tr('Examination'), tr('Grades')],
+  '/reserve': [tr('Examination'), tr('Reserve questions')],
+  '/history': [tr('Examination'), tr('History')],
+  '/close': [tr('Examination'), tr('Close exams')],
+  '/utilities': [tr('System'), tr('Utilities')],
+  '/errors': [tr('Examination'), tr('Grades'), tr('Errors')],
+  '/research': [tr('System'), tr('Research')],
 }
 
 export function Shell() {

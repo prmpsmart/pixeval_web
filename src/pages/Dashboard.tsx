@@ -4,6 +4,8 @@ import type { IconName } from '../lib/iconPaths'
 import { fmt, score } from '../lib/domain'
 import { USER } from '../data/seed'
 import { useApp } from '../store/useApp'
+import { tr } from '../i18n/mark'
+import { translate } from '../i18n/runtime'
 
 const Spark = ({ d, c }: { d: string; c: string }) => (
   <svg className="spark" viewBox="0 0 92 34">
@@ -56,17 +58,17 @@ export function Dashboard() {
   const errors = d.errorsHR.length + d.errorsHI.length
   const models = d.exams.reduce((a, e) => a + e.models, 0)
   const steps: [string, string, string, boolean][] = [
-    ['Subjects & Topics', `${d.subjects.length} · ${d.topics.length}`, '/subjects', true],
-    ['Question bank', `${d.questions.length} questions`, '/questions', d.questions.length > 0],
+    [tr('Subjects & Topics'), `${d.subjects.length} · ${d.topics.length}`, '/subjects', true],
+    [tr('Question bank'), tr(`${d.questions.length} questions`), '/questions', d.questions.length > 0],
     [
-      'Compose exam',
-      `${d.exams.length} exam${d.exams.length === 1 ? '' : 's'}`,
+      tr('Compose exam'),
+      tr(`${d.exams.length} exam${d.exams.length === 1 ? '' : 's'}`),
       '/add-exam',
       d.exams.length > 0,
     ],
-    ['Answer sheets', 'Print & administer', '/sheets', false],
-    ['Correction', 'Scan & assign', '/corrections', false],
-    ['Grades', 'Export & report', '/grades', false],
+    [tr('Answer sheets'), tr('Print & administer'), '/sheets', false],
+    [tr('Correction'), tr('Scan & assign'), '/corrections', false],
+    [tr('Grades'), tr('Export & report'), '/grades', false],
   ]
   const cur = steps.findIndex((s) => !s[3])
   const last = d.exams[d.exams.length - 1]
@@ -156,7 +158,7 @@ export function Dashboard() {
             <div className="hd" style={{ paddingBottom: 14 }}>
               <h3>Subject listing</h3>
               <span className="sub">
-                {d.subjects.length} subject{d.subjects.length === 1 ? '' : 's'}
+                {`${d.subjects.length} subject${d.subjects.length === 1 ? '' : 's'}`}
               </span>
             </div>
             <table>
@@ -216,13 +218,13 @@ export function Dashboard() {
               <h3>Grade distribution</h3>
               {d.corrected && (
                 <>
-                  <span className="sub">{d.participants.length} participants</span>
+                  <span className="sub">{`${d.participants.length} participants`}</span>
                   <div className="r">
                     <Pill tone="c-blue" plain>
-                      Avg {fmt(avg)}
+                      {`Avg ${fmt(avg)}`}
                     </Pill>
                     <Pill tone="c-ok" plain>
-                      {pass} passed
+                      {`${pass} passed`}
                     </Pill>
                   </div>
                 </>
@@ -244,14 +246,13 @@ export function Dashboard() {
               </div>
             ) : (
               <Empty icon="grade">
-                No grades yet —{' '}
+                No grades yet.{' '}
                 <a
                   style={{ color: 'var(--brand)', fontWeight: 600, cursor: 'pointer' }}
                   onClick={() => nav('/corrections')}
                 >
-                  run a correction
-                </a>{' '}
-                to see the distribution.
+                  Run a correction
+                </a>
               </Empty>
             )}
           </div>
@@ -269,22 +270,22 @@ export function Dashboard() {
                 [
                   'c-ok',
                   'check',
-                  `${errors} error sheets`,
-                  'Nothing waiting for recovery',
+                  tr(`${errors} error sheets`),
+                  tr('Nothing waiting for recovery'),
                   () => nav('/errors/hr'),
                 ],
                 [
                   'c-blue',
                   'scan',
-                  `${d.logs.length} log entries`,
-                  'Audit trail recorded',
+                  tr(`${d.logs.length} log entries`),
+                  tr('Audit trail recorded'),
                   () => nav('/utilities'),
                 ],
                 [
                   d.saving ? 'c-ok' : 'c-warn',
                   d.saving ? 'check' : 'alert',
-                  d.saving ? 'Saving to DB' : 'Not saving to DB',
-                  d.saving ? 'Changes are persisted' : 'Click to turn on and persist changes',
+                  tr(d.saving ? 'Saving to DB' : 'Not saving to DB'),
+                  tr(d.saving ? 'Changes are persisted' : 'Click to turn on and persist changes'),
                   () => d.setSaving(!d.saving),
                 ] as const,
               ].map(([tone, icon, t, s, fn]) => (
@@ -333,10 +334,10 @@ export function Dashboard() {
                 Suggested next step
               </div>
               <div style={{ fontSize: 17, fontWeight: 650, margin: '10px 0 6px', letterSpacing: '-.01em' }}>
-                Generate answer sheets for {last?.name ?? 'your exam'}
+                {last ? `Generate answer sheets for ${last.name}` : 'Generate answer sheets for your exam'}
               </div>
               <div style={{ color: '#B9C6E6', fontSize: 13, marginBottom: 14 }}>
-                {d.questions.length} questions in the bank and {errors} pending errors.
+                {`${d.questions.length} questions in the bank and ${errors} pending errors.`}
               </div>
               <button
                 className="btn"
@@ -408,7 +409,7 @@ export function Dashboard() {
           <span>
             <span style={{ color: 'var(--muted)' }}>Valid until</span>&nbsp; <b>{USER.license}</b>
           </span>
-          <span className="pill c-warn">{USER.mode}</span>
+          <span className="pill c-warn">{translate(USER.mode)}</span>
           <span style={{ marginLeft: 'auto' }} className="mono">
             {USER.db} · v{USER.version}
           </span>

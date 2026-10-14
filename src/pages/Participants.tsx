@@ -50,7 +50,7 @@ export function ParticipantsOverview() {
                   {s.name}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', color: 'var(--muted)', fontSize: 13 }}>
-                  <span>{n} participants</span>
+                  <span>{`${n} participants`}</span>
                   <b
                     style={{
                       marginLeft: 'auto',

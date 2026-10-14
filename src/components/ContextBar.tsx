@@ -1,9 +1,10 @@
 import { Select } from './ui'
+import { tr } from '../i18n/mark'
 import { examName } from '../lib/domain'
 import { useApp } from '../store/useApp'
 
 /** The Subject / Year-Group / Exam selectors that sit above most examination screens. */
-export function SubjectSelect({ label = 'Subject:' }: { label?: string }) {
+export function SubjectSelect({ label = tr('Subject:') }: { label?: string }) {
   const { subjects, subject, set } = useApp()
   return (
     <Select
@@ -16,7 +17,7 @@ export function SubjectSelect({ label = 'Subject:' }: { label?: string }) {
     />
   )
 }
-export function ExamSelect({ label = 'Exam:' }: { label?: string }) {
+export function ExamSelect({ label = tr('Exam:') }: { label?: string }) {
   const { exams, exam, subject, set } = useApp()
   return (
     <Select
@@ -27,7 +28,7 @@ export function ExamSelect({ label = 'Exam:' }: { label?: string }) {
     />
   )
 }
-export function GroupSelect({ label = 'Year / Group:' }: { label?: string }) {
+export function GroupSelect({ label = tr('Year / Group:') }: { label?: string }) {
   const { groups, group, set } = useApp()
   return (
     <Select

@@ -21,6 +21,7 @@ import { MatrixGrid } from '../dialogs/ExamDialogs'
 import { score } from '../lib/domain'
 import { useSubjectData } from '../lib/hooks'
 import { useApp } from '../store/useApp'
+import { tr } from '../i18n/mark'
 
 type Tab = 'corr' | 'formula' | 'matrix' | 'ids'
 const TABS = [
@@ -146,9 +147,9 @@ function CorrectionTab() {
                 <Icon name="check" />
               </span>
               <div>
-                <b>{n} sheets corrected</b>
+                <b>{`${n} sheets corrected`}</b>
                 <div className="hint" style={{ margin: 0 }}>
-                  {errorsHR.length + errorsHI.length} error sheets
+                  {`${errorsHR.length + errorsHI.length} error sheets`}
                 </div>
               </div>
               <span style={{ marginLeft: 'auto', display: 'flex', gap: 8 }}>
@@ -234,12 +235,12 @@ function FormulaTab() {
     preview = <span style={{ color: 'var(--bad)' }}>Invalid formula</span>
   }
   const vars: [string, string][] = [
-    ['C', 'Correct answers'],
-    ['E', 'Errors'],
-    ['P', 'Options per question'],
-    ['V', 'Max value (10)'],
-    ['N', 'Questions counted'],
-    ['B', 'Blank answers'],
+    ['C', tr('Correct answers')],
+    ['E', tr('Errors')],
+    ['P', tr('Options per question')],
+    ['V', tr('Max value (10)')],
+    ['N', tr('Questions counted')],
+    ['B', tr('Blank answers')],
   ]
   return (
     <div className="grid" style={{ gridTemplateColumns: '1fr 360px', alignItems: 'start' }}>
@@ -297,7 +298,7 @@ function FormulaTab() {
       <Card title="Live preview">
         <Body>
           <div className="hint" style={{ margin: '0 0 6px' }}>
-            Sample sheet {participants[0]?.id ?? '—'}
+            {`Sample sheet ${participants[0]?.id ?? '—'}`}
           </div>
           <div style={{ fontSize: 14 }}>{preview}</div>
         </Body>

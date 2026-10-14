@@ -5,6 +5,8 @@ import { difficultyLabel, levelTone, type Level } from '../lib/domain'
 import { useSubjectData } from '../lib/hooks'
 import type { Letter } from '../data/types'
 import { useApp } from '../store/useApp'
+import { tr } from '../i18n/mark'
+import { translate } from '../i18n/runtime'
 
 export function SelectQuestionsDialog() {
   const data = useApp()
@@ -36,7 +38,7 @@ export function SelectQuestionsDialog() {
                 close()
               }}
             >
-              Use {selectedQuestions.length} questions
+              {`Use ${selectedQuestions.length} questions`}
             </Btn>
           </DialogFooter>
         </>
@@ -78,7 +80,7 @@ export function SelectQuestionsDialog() {
                   <td className="mono">{q.id}</td>
                   <td>{q.text}</td>
                   <td>
-                    <Pill tone={levelTone[level]}>{level}</Pill>
+                    <Pill tone={levelTone[level]}>{translate(level)}</Pill>
                   </td>
                   <td>{q.used}×</td>
                 </tr>
@@ -130,7 +132,7 @@ export function PreviewExamDialog() {
           </div>
         ))}
         <div className="hint" style={{ textAlign: 'center' }}>
-          … {Math.max(0, questions.length - 6)} more questions
+          {`… ${Math.max(0, questions.length - 6)} more questions`}
         </div>
       </div>
     </Dialog>
@@ -162,12 +164,12 @@ export function FormulaDialog() {
   const { formula, set, close, toast, log } = useApp()
   const [f, setF] = useState(formula)
   const vars: [string, string][] = [
-    ['C', 'Correct'],
-    ['E', 'Errors'],
-    ['P', 'Options'],
-    ['V', 'Max value'],
-    ['N', 'Questions'],
-    ['B', 'Blank'],
+    ['C', tr('Correct')],
+    ['E', tr('Errors')],
+    ['P', tr('Options')],
+    ['V', tr('Max value')],
+    ['N', tr('Questions')],
+    ['B', tr('Blank')],
   ]
   const apply = () => {
     set({ formula: f })

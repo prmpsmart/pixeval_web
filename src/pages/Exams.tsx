@@ -4,6 +4,7 @@ import { SubjectSelect } from '../components/ContextBar'
 import { examName } from '../lib/domain'
 import { useSubjectData } from '../lib/hooks'
 import { useApp } from '../store/useApp'
+import { tr } from '../i18n/mark'
 
 export function Exams() {
   const nav = useNavigate()
@@ -11,10 +12,10 @@ export function Exams() {
   const { exams, questions, topics } = useSubjectData()
   const s = subjects.find((x) => x.id === subject)
   const quick: [string, string, 'print' | 'scan' | 'uid' | 'grade'][] = [
-    ['Sheets management', '/sheets', 'print'],
-    ['Corrections', '/corrections', 'scan'],
-    ['Assign identities', '/assign', 'uid'],
-    ['Grades', '/grades', 'grade'],
+    [tr('Sheets management'), '/sheets', 'print'],
+    [tr('Corrections'), '/corrections', 'scan'],
+    [tr('Assign identities'), '/assign', 'uid'],
+    [tr('Grades'), '/grades', 'grade'],
   ]
   return (
     <>

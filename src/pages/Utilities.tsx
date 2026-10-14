@@ -20,6 +20,7 @@ import { GroupSelect, SubjectSelect } from '../components/ContextBar'
 import { PathField } from '../components/PathField'
 import { useSubjectData } from '../lib/hooks'
 import { useApp } from '../store/useApp'
+import { tr } from '../i18n/mark'
 import { Icon } from '../components/ui'
 
 type Tab = 'subjects' | 'parts' | 'backup' | 'translate' | 'logs'
@@ -31,28 +32,31 @@ const TABS = [
   { id: 'logs' as const, label: 'Logs', icon: 'list' as const },
 ]
 
-/** A "Delete" button that asks for confirmation and warns about cascading deletion. */
-function DeleteButton({ what, cascade, run }: { what: string; cascade?: string; run: () => void }) {
+/** A "Delete" button that asks for confirmation first. All texts are passed in full so they can be translated. */
+function DeleteButton({
+  title,
+  message,
+  done,
+  run,
+}: {
+  title: string
+  message: string
+  done: string
+  run: () => void
+}) {
   const ask = useApp((s) => s.ask)
   return (
     <Btn
       variant="sm d"
       icon="trash"
-      onClick={() =>
-        ask({
-          title: `Delete ${what}?`,
-          message: `This is a cascading deletion${cascade ? `: ${cascade}` : ''}. It cannot be undone once the database is saved.`,
-          ok: 'Delete',
-          danger: true,
-          done: `${what} deleted`,
-          run,
-        })
-      }
+      onClick={() => ask({ title, message, ok: 'Delete', danger: true, done, run })}
     >
       Delete
     </Btn>
   )
 }
+
+const CASCADE = 'This is a cascading deletion. It cannot be undone once the database is saved.'
 
 function SubjectsTab() {
   const data = useApp()
@@ -113,8 +117,9 @@ function SubjectsTab() {
                   <td className="n">{data.participants.filter((p) => p.subject === s.id).length}</td>
                   <td className="n">
                     <DeleteButton
-                      what={`subject ${s.id}`}
-                      cascade="topics, questions, exams, groups and grades go with it"
+                      title={`Delete subject ${s.id}?`}
+                      message="This is a cascading deletion: its topics, questions, exams, groups and grades are removed. It cannot be undone once the database is saved."
+                      done={`Subject ${s.id} deleted`}
                       run={() => deleteSubject(s.id)}
                     />
                   </td>
@@ -168,8 +173,9 @@ function SubjectsTab() {
                       <td className="n">{mine.questions.filter((q) => q.topic === t.id).length}</td>
                       <td className="n">
                         <DeleteButton
-                          what={`topic ${t.id}`}
-                          cascade="its questions are removed"
+                          title={`Delete topic ${t.id}?`}
+                          message="This is a cascading deletion: its questions are removed. It cannot be undone once the database is saved."
+                          done={`Topic ${t.id} deleted`}
                           run={() => deleteTopic(t.id)}
                         />
                       </td>
@@ -207,8 +213,9 @@ function SubjectsTab() {
                       <td className="n">{mine.exams.length}</td>
                       <td className="n">
                         <DeleteButton
-                          what={`group ${g}`}
-                          cascade="participants and their grades are removed"
+                          title={`Delete group ${g}?`}
+                          message="This is a cascading deletion: its participants and their grades are removed. It cannot be undone once the database is saved."
+                          done={`Group ${g} deleted`}
                           run={() => deleteGroup(g)}
                         />
                       </td>
@@ -243,8 +250,9 @@ function SubjectsTab() {
                         <td className="mono">{x.date}</td>
                         <td className="n">
                           <DeleteButton
-                            what={`exam ${x.id}`}
-                            cascade="sheets and grades go with it"
+                            title={`Delete exam ${x.id}?`}
+                            message="This is a cascading deletion: its sheets and grades are removed. It cannot be undone once the database is saved."
+                            done={`Exam ${x.id} deleted`}
                             run={() => deleteExam(x.id)}
                           />
                         </td>
@@ -272,33 +280,37 @@ function SubjectsTab() {
                   }
                 >
                   <Body style={{ display: 'grid', gap: 10 }}>
-                    {(
-                      [
-                        [
-                          'Error sheets',
-                          `${data.errorsHR.length + data.errorsHI.length} sheets`,
-                          'alert',
-                          () => clearErrors(),
-                        ],
-                        [
-                          'Exam questions',
-                          `${e.qs ?? mine.questions.length} questions`,
-                          'help',
-                          () => data.saveExam(e.id, { qs: 0 }),
-                        ],
-                        [
-                          'Grades',
-                          `${data.corrected ? mine.participants.length : 0} grades`,
-                          'grade',
-                          () => {
-                            set({ corrected: false })
-                            log('Delete grades')
-                          },
-                        ],
-                      ] as const
-                    ).map(([label, count, icon, run]) => (
+                    {[
+                      {
+                        label: tr('Error sheets'),
+                        count: tr(`${data.errorsHR.length + data.errorsHI.length} sheets`),
+                        icon: 'alert' as const,
+                        title: tr('Delete error sheets?'),
+                        done: tr('Error sheets deleted'),
+                        run: () => clearErrors(),
+                      },
+                      {
+                        label: tr('Exam questions'),
+                        count: tr(`${e.qs ?? mine.questions.length} questions`),
+                        icon: 'help' as const,
+                        title: tr('Delete exam questions?'),
+                        done: tr('Exam questions deleted'),
+                        run: () => data.saveExam(e.id, { qs: 0 }),
+                      },
+                      {
+                        label: tr('Grades'),
+                        count: tr(`${data.corrected ? mine.participants.length : 0} grades`),
+                        icon: 'grade' as const,
+                        title: tr('Delete grades?'),
+                        done: tr('Grades deleted'),
+                        run: () => {
+                          set({ corrected: false })
+                          log('Delete grades')
+                        },
+                      },
+                    ].map((row) => (
                       <div
-                        key={label}
+                        key={row.label}
                         style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -309,15 +321,15 @@ function SubjectsTab() {
                         }}
                       >
                         <span className="ic-sq c-blue" style={{ width: 32, height: 32 }}>
-                          <Icon name={icon} />
+                          <Icon name={row.icon} />
                         </span>
                         <div style={{ flex: 1 }}>
-                          <b>{label}</b>
+                          <b>{row.label}</b>
                           <div className="hint" style={{ margin: 0 }}>
-                            {count}
+                            {row.count}
                           </div>
                         </div>
-                        <DeleteButton what={label.toLowerCase()} run={run} />
+                        <DeleteButton title={row.title} message={CASCADE} done={row.done} run={row.run} />
                       </div>
                     ))}
                   </Body>
@@ -346,8 +358,9 @@ function ParticipantsTab() {
         sub={rows.length}
         right={
           <DeleteButton
-            what="all participants of the group"
-            cascade="their grades are removed"
+            title="Delete all participants of the group?"
+            message="This is a cascading deletion: their grades are removed. It cannot be undone once the database is saved."
+            done="Participants deleted"
             run={deleteGroupParts}
           />
         }
@@ -374,8 +387,9 @@ function ParticipantsTab() {
                   <td style={{ color: 'var(--muted)' }}>{p.email}</td>
                   <td className="n">
                     <DeleteButton
-                      what="participant"
-                      cascade="their grades are removed"
+                      title="Delete participant?"
+                      message="This is a cascading deletion: their grades are removed. It cannot be undone once the database is saved."
+                      done="Participant deleted"
                       run={() => deletePart(p.sn)}
                     />
                   </td>
@@ -537,7 +551,7 @@ function TranslateTab() {
         title="Preview"
         right={
           translated ? (
-            <Pill tone="c-ok">{questions.length} translated</Pill>
+            <Pill tone="c-ok">{`${questions.length} translated`}</Pill>
           ) : (
             <Pill tone="c-warn" plain>
               Not run

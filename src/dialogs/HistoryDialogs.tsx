@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Dialog, DialogFooter } from '../components/Dialog'
 import { Btn, Field, Input, Mini, TextArea } from '../components/ui'
 import { useApp } from '../store/useApp'
+import { tr } from '../i18n/mark'
 
 export function EditExamDialog({ arg }: { arg?: string }) {
   const { exams, saveExam, close } = useApp()
@@ -43,7 +44,7 @@ export function EditExamDialog({ arg }: { arg?: string }) {
       </div>
       <div className="row">
         <Mini value={e.models} label="Models" />
-        <Mini value={e.status === 'open' ? 'Open' : 'Closed'} label="Status" />
+        <Mini value={tr(e.status === 'open' ? 'Open' : 'Closed')} label="Status" />
       </div>
       <div className="hint" style={{ marginTop: 12 }}>
         Questions and models are fixed once sheets are generated.

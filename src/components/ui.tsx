@@ -1,4 +1,5 @@
 import type { ChangeEvent, ReactNode } from 'react'
+import { translate } from '../i18n/runtime'
 import { PATHS, type IconName } from '../lib/iconPaths'
 
 export function Icon({ name, className = '' }: { name: IconName; className?: string }) {
@@ -69,12 +70,12 @@ export function Select({
   return (
     <label className="sel">
       {label && <span className="k">{label}</span>}
-      <span className="v">{cur[1]}</span>
+      <span className="v">{translate(cur[1])}</span>
       <select value={value} onChange={(e: ChangeEvent<HTMLSelectElement>) => onChange(e.target.value)}>
         {options.length ? (
           options.map(([v, l]) => (
             <option key={v} value={v}>
-              {l}
+              {translate(l)}
             </option>
           ))
         ) : (
@@ -157,16 +158,12 @@ export function Pager({
         color: 'var(--muted)',
       }}
     >
-      <span>
-        {total ? page * per + 1 : 0}–{Math.min(total, (page + 1) * per)} of {total}
-      </span>
+      <span>{`${total ? page * per + 1 : 0}–${Math.min(total, (page + 1) * per)} of ${total}`}</span>
       <span style={{ marginLeft: 'auto' }} />
       <Btn variant="sm" disabled={page === 0} onClick={() => onPage(page - 1)}>
         Prev
       </Btn>
-      <span>
-        Page {page + 1} / {pages}
-      </span>
+      <span>{`Page ${page + 1} / ${pages}`}</span>
       <Btn variant="sm" disabled={page >= pages - 1} onClick={() => onPage(page + 1)}>
         Next
       </Btn>
@@ -235,7 +232,7 @@ export function Tabs<T extends string>({
       {tabs.map((t) => (
         <span key={t.id} className={value === t.id ? 'on' : ''} onClick={() => onChange(t.id)}>
           {t.icon && <Icon name={t.icon} />}
-          {t.label}
+          {translate(t.label)}
         </span>
       ))}
     </div>
@@ -255,7 +252,7 @@ export function Seg<T extends string>({
     <div className="seg">
       {tabs.map(([id, label]) => (
         <span key={id} className={value === id ? 'on' : ''} onClick={() => onChange(id)}>
-          {label}
+          {translate(label)}
         </span>
       ))}
     </div>
@@ -265,7 +262,7 @@ export function Seg<T extends string>({
 export const Mini = ({ value, label, tone }: { value: ReactNode; label: string; tone?: string }) => (
   <div className="mini">
     <b style={tone ? { color: `var(--${tone})` } : undefined}>{value}</b>
-    <span>{label}</span>
+    <span>{translate(label)}</span>
   </div>
 )
 

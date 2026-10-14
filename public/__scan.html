@@ -1,0 +1,24 @@
+<meta charset=utf-8><!doctype html><pre id=o></pre><script>
+const out=new Set();const f=document.createElement('iframe');f.style.cssText='width:1400px;height:900px';f.src='/?pseudo#/login';document.body.appendChild(f);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+f.onload=async()=>{await sleep(1500);const w=f.contentWindow,d=f.contentDocument,A=()=>w.__app.getState();
+const scan=(tag)=>{const wk=d.createTreeWalker(d.body,NodeFilter.SHOW_TEXT);let n;while(n=wk.nextNode()){const t=n.nodeValue.trim();if(!t||/[⟦⟧]/.test(t))continue;if(!/\p{L}{3,}/u.test(t))continue;const el=n.parentElement;if(!el||el.closest('script,style,#toasts-ignore'))continue;out.add(tag+' | '+t.slice(0,90))}
+ // attributes
+ d.querySelectorAll('[placeholder],[title]').forEach(e=>{for(const a of ['placeholder','title']){const v=e.getAttribute(a);if(v&&/\p{L}{3,}/u.test(v)&&!/[⟦⟧]/.test(v))out.add(tag+' @'+a+' | '+v.slice(0,90))}})}
+const routes=['dashboard','subjects','questions','participants','participants/TJ','exams','add-exam','sheets','corrections','assign','grades','errors/hr','errors/hi','reserve','history','close','utilities','research','research/06-final-technical-report'];
+A().fastForward?.();await sleep(300);
+const tabs={sheets:null};
+for(const r of routes){w.location.hash='#/'+r;await sleep(350);scan('P:'+r)}
+// tab clicks on pages with tabs
+const clickAll=async(route,sel)=>{w.location.hash='#/'+route;await sleep(350);const els=[...d.querySelectorAll(sel)];for(let i=0;i<els.length;i++){const e=[...d.querySelectorAll(sel)][i];if(!e)continue;e.click();await sleep(250);scan('T:'+route+'#'+i)}}
+await clickAll('sheets','.tabs span');await clickAll('corrections','.tabs span');await clickAll('utilities','.tabs span');await clickAll('assign','.seg span');
+// utilities subtabs
+w.location.hash='#/utilities';await sleep(300);d.querySelectorAll('.tabs span')[0].click();await sleep(200);d.querySelectorAll('.seg span')[1]?.click();await sleep(250);scan('U:single');for(const e of [...d.querySelectorAll('.tabs.pill-t span')]){e.click();await sleep(250);scan('U:sub')}
+// dialogs
+const dl={confirm:undefined,picker:'x:file',cmd:undefined,config:undefined,credits:undefined,participant:'2','import-participants':undefined,'year-group':undefined,'search-participants':undefined,subject:'TJ',topic:'1',question:'3','search-questions':undefined,'import-questions':undefined,'export-questions':undefined,'update-questions':undefined,'question-exams':'2','question-history':'2','multi-answers':'2','select-questions':undefined,'preview-exam':undefined,difficulty:undefined,formula:undefined,matrix:undefined,instructions:undefined,barcodes:undefined,report:'2','output-folder':undefined,statistics:undefined,'edit-exam':'1',section:'0'};
+w.location.hash='#/dashboard';await sleep(300);
+for(const [n,a] of Object.entries(dl)){if(n==='confirm')A().ask({title:'t',message:'m',ok:'ok',run(){}});else A().open(n,a);await sleep(200);scan('D:'+n);
+ if(n==='config'){for(const e of [...d.querySelectorAll('.dlg .tabs span')]){e.click();await sleep(200);scan('D:config:tab')}}
+ A().closeAll();await sleep(80)}
+o.textContent=[...out].join('\n');document.title='DONE'};
+</script>

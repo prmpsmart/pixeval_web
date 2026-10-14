@@ -194,13 +194,13 @@ export function Assign() {
             <Body>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
                 <span style={{ fontSize: 34, fontWeight: 700, letterSpacing: '-.03em' }}>{assigned}</span>
-                <span style={{ color: 'var(--muted)' }}>of {participants.length} sheets assigned</span>
+                <span style={{ color: 'var(--muted)' }}>{`of ${participants.length} sheets assigned`}</span>
               </div>
               <div className="bar" style={{ margin: '10px 0 14px', height: 8 }}>
                 <i style={{ width: `${(assigned / participants.length) * 100}%` }} />
               </div>
               {open_.length ? (
-                <div className="hint">{open_.length} sheets still show anonymous names in Grades.</div>
+                <div className="hint">{`${open_.length} sheets still show anonymous names in Grades.`}</div>
               ) : (
                 <>
                   <div

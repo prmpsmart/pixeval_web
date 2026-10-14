@@ -77,7 +77,7 @@ export function YearGroupDialog() {
           >
             <b>{g}</b>
             <span className="hint" style={{ margin: '0 0 0 auto' }}>
-              {participants.filter((p) => p.group === g).length} participants
+              {`${participants.filter((p) => p.group === g).length} participants`}
             </span>
             <button
               className="ib"

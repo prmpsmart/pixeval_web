@@ -4,6 +4,7 @@ import { SubjectSelect } from '../components/ContextBar'
 import { difficulty, difficultyLabel, levelTone } from '../lib/domain'
 import { useSubjectData } from '../lib/hooks'
 import { useApp } from '../store/useApp'
+import { translate } from '../i18n/runtime'
 
 const PER = 20
 
@@ -121,7 +122,7 @@ export function Questions() {
                       </span>
                     </td>
                     <td>
-                      <Pill tone={levelTone[level]}>{level}</Pill>
+                      <Pill tone={levelTone[level]}>{translate(level)}</Pill>
                     </td>
                     <td className="n">{Math.round(difficulty(data, x) * 100)}%</td>
                     <td>{(topics.find((t) => t.id === x.topic)?.name ?? '—').slice(0, 26)}</td>

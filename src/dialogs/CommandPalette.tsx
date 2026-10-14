@@ -4,6 +4,7 @@ import { Icon } from '../components/ui'
 import { NAV } from '../lib/nav'
 import { examName } from '../lib/domain'
 import { useApp } from '../store/useApp'
+import { translate } from '../i18n/runtime'
 
 interface Item {
   icon: Parameters<typeof Icon>[0]['name']
@@ -22,7 +23,7 @@ export function CommandPalette() {
     nav(to)
   }
   const text = q.toLowerCase()
-  const match = (s: string) => s.toLowerCase().includes(text)
+  const match = (s: string) => translate(s).toLowerCase().includes(text)
 
   const screens: Item[] = NAV.filter((n) => n.to && n.id !== 'logout' && match(n.label)).map((n) => ({
     icon: n.icon,
@@ -72,7 +73,7 @@ export function CommandPalette() {
         {items.map((it) => (
           <div className="it" key={it.label} onClick={it.run}>
             <Icon name={it.icon} />
-            {it.label}
+            {translate(it.label)}
             {it.hint && <span className="kbd">{it.hint}</span>}
           </div>
         ))}

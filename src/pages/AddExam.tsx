@@ -105,9 +105,7 @@ export function AddExam() {
             right={
               <>
                 <span className="sub">Questions</span>
-                <b>
-                  {used} of {count}
-                </b>
+                <b>{`${used} of ${count}`}</b>
                 <div className="bar" style={{ width: 120 }}>
                   <i style={{ width: `${Math.min(100, (used / count) * 100)}%` }} />
                 </div>
@@ -199,7 +197,9 @@ export function AddExam() {
                 style={{ justifyContent: 'flex-start' }}
                 onClick={() => open('select-questions')}
               >
-                Select questions manually{selectedQuestions.length ? ` (${selectedQuestions.length})` : ''}
+                {selectedQuestions.length
+                  ? `Select questions manually (${selectedQuestions.length})`
+                  : 'Select questions manually'}
               </Btn>
               <Btn icon="eye" style={{ justifyContent: 'flex-start' }} onClick={() => open('preview-exam')}>
                 Preview questions

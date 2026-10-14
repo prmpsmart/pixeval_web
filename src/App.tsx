@@ -3,6 +3,7 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Shell } from './components/Shell'
 import { DialogHost } from './components/DialogHost'
 import { Toasts } from './components/Toasts'
+import { useLanguage } from './i18n/runtime'
 import { Login } from './pages/Login'
 import { Dashboard } from './pages/Dashboard'
 import { ParticipantsList, ParticipantsOverview } from './pages/Participants'
@@ -24,8 +25,9 @@ import { Utilities } from './pages/Utilities'
 const Research = lazy(() => import('./pages/Research').then((m) => ({ default: m.Research })))
 
 export default function App() {
+  const lang = useLanguage()
   return (
-    <HashRouter>
+    <HashRouter key={lang}>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route element={<Shell />}>
