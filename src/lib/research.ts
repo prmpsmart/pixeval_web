@@ -24,6 +24,7 @@ const LABELS: Record<string, string> = {
   '03-local-web-app-fastapi-react': '03 · Web app in the browser',
   '04-pywebview-native-window': '04 · Web app in a pywebview window',
   '05-comparison-and-roadmap': 'Comparison and roadmap',
+  '07-engine-behind-http-feasibility': '07 · Feasibility: engine behind HTTP',
 }
 
 const titleOf = (body: string, fallback: string) => /^#\s+(.+)$/m.exec(body)?.[1].trim() ?? fallback
