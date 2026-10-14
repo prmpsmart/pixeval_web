@@ -6,7 +6,13 @@ export function Toasts() {
   return (
     <div id="toasts">
       {toasts.map((t) => (
-        <div className="toast" key={t.id}><Icon name="check" /><div>{t.msg}{t.sub && <small>{t.sub}</small>}</div></div>
+        <div className="toast" key={t.id}>
+          <Icon name="check" />
+          <div>
+            {t.msg}
+            {t.sub && <small>{t.sub}</small>}
+          </div>
+        </div>
       ))}
     </div>
   )

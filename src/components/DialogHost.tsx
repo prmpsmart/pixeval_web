@@ -8,9 +8,25 @@ import { CreditsDialog } from '../dialogs/CreditsDialog'
 import { ParticipantDialog } from '../dialogs/ParticipantDialog'
 import { ImportParticipantsDialog, YearGroupDialog, SearchParticipantsDialog } from '../dialogs/GroupDialogs'
 import { SubjectDialog, TopicDialog } from '../dialogs/SubjectDialogs'
-import { QuestionDialog, SearchQuestionsDialog, ImportQuestionsDialog, ExportQuestionsDialog, UpdateQuestionsDialog } from '../dialogs/QuestionDialogs'
-import { QuestionExamsDialog, QuestionHistoryDialog, MultiAnswersDialog } from '../dialogs/QuestionInfoDialogs'
-import { SelectQuestionsDialog, PreviewExamDialog, DifficultyDialog, FormulaDialog, MatrixDialog } from '../dialogs/ExamDialogs'
+import {
+  QuestionDialog,
+  SearchQuestionsDialog,
+  ImportQuestionsDialog,
+  ExportQuestionsDialog,
+  UpdateQuestionsDialog,
+} from '../dialogs/QuestionDialogs'
+import {
+  QuestionExamsDialog,
+  QuestionHistoryDialog,
+  MultiAnswersDialog,
+} from '../dialogs/QuestionInfoDialogs'
+import {
+  SelectQuestionsDialog,
+  PreviewExamDialog,
+  DifficultyDialog,
+  FormulaDialog,
+  MatrixDialog,
+} from '../dialogs/ExamDialogs'
 import { InstructionsDialog, BarcodesDialog } from '../dialogs/SheetDialogs'
 import { ReportDialog, OutputFolderDialog, StatisticsDialog } from '../dialogs/GradeDialogs'
 import { EditExamDialog, SectionDialog } from '../dialogs/HistoryDialogs'

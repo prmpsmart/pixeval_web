@@ -45,8 +45,22 @@ export default function App() {
           <Route path="/history" element={<History />} />
           <Route path="/close" element={<CloseExams />} />
           <Route path="/utilities" element={<Utilities />} />
-          <Route path="/research" element={<Suspense fallback={null}><Research /></Suspense>} />
-          <Route path="/research/:doc" element={<Suspense fallback={null}><Research /></Suspense>} />
+          <Route
+            path="/research"
+            element={
+              <Suspense fallback={null}>
+                <Research />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/research/:doc"
+            element={
+              <Suspense fallback={null}>
+                <Research />
+              </Suspense>
+            }
+          />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Route>
         <Route path="/" element={<Navigate to="/login" replace />} />
